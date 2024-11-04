@@ -90,9 +90,7 @@ mkdir -p /tmp/{lower,upper,merged,work}
    ```
    The merged directory should no longer show `file2.txt`, as it’s hidden by the overlay filesystem.
 
----
-
-5**Cleanup:**
+5. **Cleanup:**
    ```bash
    sudo umount -l /tmp/merged
    ```
