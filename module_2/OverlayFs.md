@@ -92,4 +92,12 @@ mkdir -p /tmp/{lower,upper,merged,work}
 
 ---
 
+5**Cleanup:**
+   ```bash
+   sudo umount -l /tmp/merged
+   ```
+
+---
+
+
 After completing these exercises, you should have a better understanding of how the overlay filesystem uses lower, upper, and merged directories to manage data layers.
