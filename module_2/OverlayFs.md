@@ -6,7 +6,7 @@ In this lab, you will explore the basic concepts of overlay filesystems, specifi
 ## Setup
 Start by creating a directory structure for the exercises:
 ```bash
-mkdir -p ~/overlay-lab/{lower,upper,merged}
+mkdir -p /tmp/{lower,upper,merged}
 ```
 
 ---
@@ -17,18 +17,18 @@ mkdir -p ~/overlay-lab/{lower,upper,merged}
 
 1. **Add Files to the Lower Directory:**
    ```bash
-   echo "File in lower directory" > ~/overlay-lab/lower/file1.txt
-   echo "Another file in lower directory" > ~/overlay-lab/lower/file2.txt
+   echo "File in lower directory" > /tmp/lower/file1.txt
+   echo "Another file in lower directory" > /tmp/lower/file2.txt
    ```
 
 2. **Mount the Overlay Filesystem:**
    ```bash
-   sudo mount -t overlay overlay -o lowerdir=~/overlay-lab/lower,upperdir=~/overlay-lab/upper,workdir=~/overlay-lab/upper ~/overlay-lab/merged
+   sudo mount -t overlay overlay -o lowerdir=/tmp/lower,upperdir=/tmp/upper,workdir=/tmp/work /tmp/merged
    ```
 
 3. **Explore the Merged Directory:**
    ```bash
-   ls ~/overlay-lab/merged
+   ls /tmp/merged
    ```
    You should see `file1.txt` and `file2.txt`, demonstrating that files in the lower directory appear in the merged view.
 
@@ -40,24 +40,24 @@ mkdir -p ~/overlay-lab/{lower,upper,merged}
 
 1. **Modify an Existing File in the Merged Directory:**
    ```bash
-   echo "Modified content in merged directory" >> ~/overlay-lab/merged/file1.txt
+   echo "Modified content in merged directory" >> /tmp/merged/file1.txt
    ```
 
 2. **Observe Changes in the Upper Directory:**
    ```bash
-   ls ~/overlay-lab/upper
-   cat ~/overlay-lab/upper/file1.txt
+   ls /tmp/upper
+   cat /tmp/upper/file1.txt
    ```
    You should see a new version of `file1.txt` in the upper directory, containing your changes.
 
 3. **Create a New File in the Merged Directory:**
    ```bash
-   echo "New file in merged directory" > ~/overlay-lab/merged/file3.txt
+   echo "New file in merged directory" > /tmp/merged/file3.txt
    ```
 
 4. **Verify the New File in the Upper Directory:**
    ```bash
-   ls ~/overlay-lab/upper
+   ls /tmp/upper
    ```
    The new file `file3.txt` will only appear in the upper directory, as it was created after the overlay mount.
 
@@ -69,24 +69,24 @@ mkdir -p ~/overlay-lab/{lower,upper,merged}
 
 1. **Delete a File from the Merged Directory:**
    ```bash
-   rm ~/overlay-lab/merged/file2.txt
+   rm /tmp/merged/file2.txt
    ```
 
 2. **Check the Upper Directory for Deletion Markers:**
    ```bash
-   ls -a ~/overlay-lab/upper
+   ls -a /tmp/upper
    ```
    A "whiteout" marker should appear, hiding `file2.txt` from the lower layer without deleting it.
 
 3. **Verify the Lower Directory Remains Unchanged:**
    ```bash
-   ls ~/overlay-lab/lower
+   ls /tmp/lower
    ```
    The original `file2.txt` should still be in the lower directory.
 
 4. **List the Merged Directory Contents:**
    ```bash
-   ls ~/overlay-lab/merged
+   ls /tmp/merged
    ```
    The merged directory should no longer show `file2.txt`, as it’s hidden by the overlay filesystem.
 
