@@ -6,7 +6,7 @@ In this lab, you will explore the basic concepts of overlay filesystems, specifi
 ## Setup
 Start by creating a directory structure for the exercises:
 ```bash
-mkdir -p /tmp/{lower,upper,merged}
+mkdir -p /tmp/{lower,upper,merged,work}
 ```
 
 ---
