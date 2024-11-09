@@ -44,7 +44,7 @@
    ```bash
    sudo ip link set veth-ns netns <PID>
    ```
-  **Question** Why do we need to use the PID to assign the interface to the namespace?
+   **Question** Why do we need to use the PID to assign the interface to the namespace?
 
 4. Configure the network interfaces on the host.
    ```bash
