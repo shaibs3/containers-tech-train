@@ -25,25 +25,24 @@ Isolate processes to create an independent view of the process tree.
 - `--pid`: Creates a new process namespace.
 - `--fork`: Forks a new process to start the namespace.
 - `--mount-proc`: Remounts `/proc` to reflect the new namespace.
-3. View the running processes on the new namespace.
-   ```bash
-   ps aux
-   ```
-4. Verify that the bash process has PID (Process ID) 1.
-5. Verify that no host processes listed in step 1 are visible.
+- `bash`: Spawns a new shell process inside the namespace.
+3. **Question** - What processes do you expect to see in the new namespace?
+4. **Question** - What is the PID of the bash process in the new namespace?
+5. **Question** - Are there any host processes listed in step 1 in the new namespace?
 6. Run a new process in the new process namespace.
    ```bash
    sleep 360 &
    ```
-7. Verify the new sleep process is a child process of the bash process.
+7. **Question** - What do you think will be the relationship between the bash process that created the namespace and the new process created in step 5?
+8. See the process tree of the new namespace.
    ```bash
    pstree -tpln
    ```
-8. Open a new terminal and run -
-   ```bash
-   pstree -tpln
-   ```
-9. Verify that you see both bash and sleep processes in the original process namespace.
+8. **Question** - Is the process created in step 6 visibile on the host? 
+   - To verify open a new terminal and run -
+      ```bash
+      pstree -tpln
+      ```
 10. Exit the new namespace.
    ```bash
    exit
