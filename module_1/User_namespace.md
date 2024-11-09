@@ -1,88 +1,75 @@
-# Hands-on Session: Exploring Linux Namespaces
+# Hands-on Session: Exploring User Namespace
 
 ## Objectives:
-- Understand how namespaces isolate different aspects of the system.
-- Gain practical experience working with process, user, and network namespaces.
-- Use the `unshare` command to create and interact with namespaces.
+- Gain practical experience working with user namespace.
 
 ---
 
 ### User Namespace
 
-**Goal**:  
-Create a new user namespace, where the user ID inside the new namespace is mapped to various users on the host.
 
-#### Exercise 1:
-1. Check the current UID and GID.
+#### Create a new User namespace with root privileges
+
+1. Create a new user namespace.
    ```bash
-   id
+   sudo unshare --user --mount --map-root-user bash
    ```
-   You should see output similar to `uid=1000(yourusername) gid=1000(yourgroup) groups=1000(yourgroup)`.
 
-2. Create a new user namespace.
-  ```bash
-  sudo unshare --user --mount --map-root-user bash
-  ```
+   **Arguments Explanation**:
+   - `--user`: Unshares the user namespace.
+   - `--mount`: Unshares the mount namespace to ensure isolation.
+   - `--map-root-user`: Maps your user ID (UID 0) to the root user (UID 0) inside the namespace.
+   - `bash`: Spawns a new shell inside the namespace.
 
-    **Explanation**:
-- `--user`: Unshares the user namespace.
-- `--mount`: Unshares the mount namespace to ensure isolation.
-- `--map-root-user`: Maps your user ID (UID 1000) to the root user (UID 0) inside the namespace.
-- `bash`: Spawns a new shell inside the namespace.
+2. Inside the new shell, check the current UID and GID.
+    ```bash
+    id
+    ```
 
-3. Inside the new shell, check the current UID and GID.
-  ```bash
-  id
-  ```
-You should see output similar to `uid=0(root) gid=0(root) groups=0(root)`.
-4. Experiment with privileged operations.
-  ```bash
-  mkdir /test-directory
-  ```
-5. Open a new terminal and run-
-   ```bash
-    ls /test-directory
-   ```
-6. Verify that the directory exists on the host.
-
-   **Question**:  
-   Why did the new user namespace manage to write to the host filesystem?
-
+3. Experiment with privileged operations:
+    ```bash
+    mkdir /test-directory
+    ```
+4. **Question** Did the command succeed?
+5. **Question** Does the new direcotry exist on the host?
+   - To answer the question, Open a new ubuntu terminal and type the following:
+     ```bash
+     ls /test-directory
+     ```
+6. **Question** Why did the user in the new user namespace managed to write to the host filesystem?
 7. Exit the namespace.
    ```bash 
    exit
    ```
 
-#### Exercise 2:
+#### Create a new User namespace with "fake" root
 1. Check the current UID and GID.
-  ```bash
-  id
-  ```
+    ```bash
+    id
+    ```
 2. Create a new user namespace.
-  ```bash 
-  unshare --user --map-user=0 bash
-  ```
+    ```bash 
+    unshare --user --map-user=0 bash
+    ```
 
-    **Explanation**:
-- `--user`: Unshares the user namespace.
-- `--map-user=0`: Maps your user ID (UID 1000) to the root user (UID 0) inside the namespace.
-- `bash`: Spawns a new shell inside the namespace.
+   **Arguments Explanation**:
+   - `--user`: Unshares the user namespace.
+   - `--map-user=0`: Maps your user ID (UID 1000) to the root user (UID 0) inside the namespace.
+   - `bash`: Spawns a new shell inside the namespace.
 
 3. Inside the new shell, check the current UID and GID:
-  ```bash
-  id
-  ```  
-You should see output similar to `uid=0(root) gid=0(root) groups=0(root)`.
-4. Experiment with privileged operations:
-  ```bash
-  mkdir /test-directory
-  ```
-5. Verify that the command fails.
+    ```bash
+    id
+    ```  
+4. **Question** Is the running user is root user?
 
-   **Question**:  
-   Why did the command fail?
+5. Experiment with privileged operations:
+    ```bash
+    mkdir /test-directory
+    ```
+6. **Question** Did the command succeed and why?
 
-6. Exit the namespace.
+7. Exit the namespace.
    ```
    bash exit
    ```

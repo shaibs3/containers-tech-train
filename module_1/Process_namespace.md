@@ -1,9 +1,7 @@
 # Hands-on Session: Exploring Process Namespace
 
 ## Objectives:
-- Understand how namespaces isolate different aspects of the system.
 - Gain practical experience working with process namespace.
-- Use the `unshare` command to create and interact with namespaces.
 
 ---
 

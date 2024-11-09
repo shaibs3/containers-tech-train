@@ -1,9 +1,7 @@
-# Hands-on Session: Exploring Linux Namespaces
+# Hands-on Session: Exploring Network Namespace
 
 ## Objectives:
-- Understand how namespaces isolate different aspects of the system.
 - Gain practical experience working with network namespaces.
-- Use the `unshare` command to create and interact with namespaces.
 
 ---
 
