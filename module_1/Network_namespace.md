@@ -9,27 +9,26 @@
 
 ### Network Namespace
 
-**Goal**:  
-Isolate network interfaces, allowing for independent network configurations inside the namespace.
-
 **Exercise**:
-1. Create a new network namespace.
+
+#### 1. Create a new network namespace
+- Create the  namespace.
    ```bash
    sudo unshare --net --mount-proc /bin/bash
    ```
-
    **Explanation**:
     - `--net`: Creates a new network namespace.
     - `--mount-proc`: Mounts a new `/proc` filesystem inside the namespace.
     - `/bin/bash`: Starts a new shell inside the namespace.
 
-2. Verify you are in the new network namespace.
+- List the network interfaces available in the new namespace.
    ```bash
    ip a
    ```  
-   You should only see the `lo` interface.
+   **Question** Do you see the same network interfaces as on the host?
 
-3. Return to the host shell and create a veth pair:
+#### 2. Create network connectivity between the host and the new namespace
+- Return to the host shell and create a veth pair:
    ```bash
    sudo ip link add veth-host type veth peer name veth-ns`
    ```
@@ -38,43 +37,44 @@ Isolate network interfaces, allowing for independent network configurations insi
     - `veth-host`: This will stay in the host network namespace.
     - `veth-ns`: This will be moved to the newly created namespace.
 
-4. Return to the new network namespace and get the PID of the shell:
+- Return to the new network namespace and get the PID of the shell:
    ```bash
    echo $$
    ```
 
-5. Return to the host shell and move `veth-ns` to the PID from step 4:
+- Return to the host shell and move `veth-ns` to the PID from step 4:
    ```bash
    sudo ip link set veth-ns netns <PID>
    ```
+  **Question** Why do we need to use the PID to assign the interface to the namespace?
 
-6. Configure the network interfaces on the host.
+- Configure the network interfaces on the host.
    ```bash
    sudo ip addr add 192.168.15.1/24 dev veth-host
    sudo ip link set veth-host up
    ```
-7. Configure the network interfaces on the new network namespace.
+- Configure the network interfaces on the new network namespace.
    ```bash
      ip addr add 192.168.15.2/24 dev veth-ns
      ip link set veth-ns up
      ip link set lo up
    ```
-8. Test network connectivity from the new namespace:
+- Test network connectivity from the new namespace:
    ```bash
    ping 192.168.15.1
    ```
 
 
 <details>
-  <summary>9. Bonus section. Connect the container to the internet</summary>
+  <summary>Bonus section. Connect the container to the internet</summary>
 
-   1. Enable IP forwarding:
+- Setup the host:
    - From the host:
       ```bash
       sudo sysctl -w net.ipv4.ip_forward=1
       sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
       ```
-   2. Add default route in the new network namespace
+- Add default route in the new network namespace
    - From the new namespace:
       ```bash
       ip route add default via 192.168.15.1
@@ -84,6 +84,14 @@ Isolate network interfaces, allowing for independent network configurations insi
     curl https://www.google.com
     ```
 
+#### Cleanup
 
+   ```bash
+   exit
+   sudo ip link delete veth-host
+   # uncomment below if the bonus section was done
+   #sudo sysctl -w net.ipv4.ip_forward=0
+   #sudo iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+   ```
 
 
