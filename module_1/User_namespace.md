@@ -21,7 +21,7 @@
    - `--map-root-user`: Maps your user ID (UID 0) to the root user (UID 0) inside the namespace.
    - `bash`: Spawns a new shell inside the namespace.
 
-2. Inside the new shell, check the current UID and GID.
+2. Inside the new shell, check the current UID.
     ```bash
     id
     ```
@@ -43,7 +43,7 @@
    ```
 
 #### Create a new User namespace with "fake" root
-1. Check the current UID and GID.
+1. Check the current UID.
     ```bash
     id
     ```
@@ -57,7 +57,7 @@
    - `--map-user=0`: Maps your user ID (UID 1000) to the root user (UID 0) inside the namespace.
    - `bash`: Spawns a new shell inside the namespace.
 
-3. Inside the new shell, check the current UID and GID:
+3. Inside the new shell, check the current UID:
     ```bash
     id
     ```  
