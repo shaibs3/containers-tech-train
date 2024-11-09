@@ -1,4 +1,4 @@
-# Hands-on Session: Exploring Linux Namespaces
+# Hands-on Session: Exploring Process Namespace
 
 ## Objectives:
 - Understand how namespaces isolate different aspects of the system.
