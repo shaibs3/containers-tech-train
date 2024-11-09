@@ -2,7 +2,7 @@
 
 ## Objectives:
 - Understand how namespaces isolate different aspects of the system.
-- Gain practical experience working with process, user, and network namespaces.
+- Gain practical experience working with network namespaces.
 - Use the `unshare` command to create and interact with namespaces.
 
 ---
@@ -64,19 +64,26 @@ Isolate network interfaces, allowing for independent network configurations insi
    ping 192.168.15.1
    ```
 
-9. Connect the container to the internet.
 
-   Enable IP forwarding.From the host, run-
-    ```bash
-    sudo sysctl -w net.ipv4.ip_forward=1
-    sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-    ```
-   From the new namespace, run-
-    ```bash
-    ip route add default via 192.168.15.1
-    ```
-10. Check connectivity from the new namespace:
+<details>
+  <summary>9. Bonus section. Connect the container to the internet</summary>
+
+   1. Enable IP forwarding:
+   - From the host:
+      ```bash
+      sudo sysctl -w net.ipv4.ip_forward=1
+      sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+      ```
+   2. Add default route in the new network namespace
+   - From the new namespace:
+      ```bash
+      ip route add default via 192.168.15.1
+     ```
+2. Check connectivity from the new namespace:
     ```bash
     curl https://www.google.com
     ```
+
+
+
 
