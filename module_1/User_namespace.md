@@ -73,6 +73,6 @@
    ```
 
 7. Exit the namespace.
-   ```
-   bash exit
+   ``` bash
+    exit
    ```
