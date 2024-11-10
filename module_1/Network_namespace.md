@@ -28,7 +28,7 @@
 #### 2. Create network connectivity between the host and the new namespace
 1. Return to the host shell and create a veth pair:
    ```bash
-   sudo ip link add veth-host type veth peer name veth-ns`
+   sudo ip link add veth-host type veth peer name veth-ns
    ```
 
    **Explanation**:
