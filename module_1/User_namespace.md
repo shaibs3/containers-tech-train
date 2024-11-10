@@ -8,7 +8,7 @@
 ### User Namespace
 
 
-#### Create a new User namespace with root privileges
+#### 1. Create a new User namespace with root privileges
 
 1. Create a new user namespace.
    ```bash
@@ -32,17 +32,14 @@
     ```
 4. **Question** Did the command succeed?
 5. **Question** Does the new direcotry exist on the host?
-   - To answer the question, Open a new ubuntu terminal and type the following:
-     ```bash
-     ls /test-directory
-     ```
 6. **Question** Why did the user in the new user namespace managed to write to the host filesystem?
 7. Exit the namespace.
    ```bash 
+   rm -rf /test-directory
    exit
    ```
 
-#### Create a new User namespace with "fake" root
+#### 2. Create a new User namespace with "fake" root
 1. Check the current UID.
     ```bash
     id
