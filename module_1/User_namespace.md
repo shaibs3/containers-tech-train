@@ -66,6 +66,12 @@
     ```
 6. **Question** Did the command succeed and why?
 
+7. You can view the current user namespace mapping by running the following command:
+   ```bash 
+   cat /proc/self/uid_map
+   <start of UID in parent namespace> <start of UID in current namespace> <number of posiible UIDs in the current namespace>
+   ```
+
 7. Exit the namespace.
    ```
    bash exit
