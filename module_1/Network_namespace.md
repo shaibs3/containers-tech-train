@@ -44,7 +44,6 @@
    ```bash
    sudo ip link set veth-ns netns <PID>
    ```
-   **Question** Why do we need to use the PID to assign the interface to the namespace?
 
 4. **From the host shell** Configure the network interfaces.
    ```bash
@@ -53,13 +52,17 @@
    ```
 5. **From the new network namesapce** Configure the network interfaces.
    ```bash
-     # Rename the veth-ns interface to eth0
-     ip link set veth-ns name eth0
      # Assign ip address
      ip addr add 192.168.15.2/24 dev eth0
      ip link set eth0 up
      ip link set lo up
    ```
+6. View the network interfaces in the new namespace:
+   ```bash
+   ip a
+   ```
+7. Rename veth-ns to eth0 (List the network interface to verify it was changed successfully)
+
 - Test network connectivity from the new namespace:
    ```bash
    ping 192.168.15.1
