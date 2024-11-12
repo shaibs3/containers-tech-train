@@ -76,11 +76,8 @@
       sudo sysctl -w net.ipv4.ip_forward=1
       sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
       ```
-- Add default route in the new network namespace
-   - **From the new network namesapce**:
-      ```bash
-      ip route add default via 192.168.15.1
-     ```
+- **Question** Which command is needed to be added on the new network namespace so it will have full connectivity?
+
 2. **From the new network namesapce** Check connectivity to the internet:
     ```bash
     curl https://httpbin.org/ip
