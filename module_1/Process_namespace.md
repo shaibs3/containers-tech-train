@@ -38,11 +38,8 @@
       ```bash
       pstree -tpln
       ```
-3. **Question** - Is the process created in step 6 visible on the host? 
-   - To answer the question, Open a new ubuntu terminal and type the following:
-      ```bash
-      pstree -tpln
-      ```
+3. **Question** - Is the process created in step 6 visible on the host?
+
 #### Cleanup
 1. type:
    ```bash
